@@ -9,7 +9,7 @@
     <color name="navigationBarColor">#1F1F1F</color>
 
     <color name="background_color">@color/Brown_50</color>
-    <color name="card_background_color">@color/Brown_100</color>
+    <color name="card_background_color">@color/Brown_200</color>
     <color name="colorYellow">#FFF9C4</color>
 
     <color name="Brown_50">#EFEBE9</color>

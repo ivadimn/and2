@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.ContentFrameLayout;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,11 +21,19 @@ import ru.ivadimn.a0201menu.model.Note;
 
 public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteHolder> {
 
+    public static final String TAG = "NOTE_ADAPTER";
     private List<Note> notes;
     private Context context;
+    private OnRVClickListener listener;
 
-    public NoteAdapter(Context context) {
+    public interface OnRVClickListener {
+        public void onClick(View view, int position);
+        public void onLongClick(View view, int position);
+    }
+
+    public NoteAdapter(Context context, OnRVClickListener listener) {
         this.context = context;
+        this.listener = listener;
     }
 
     public void updateData(List<Note> notes) {
@@ -35,12 +44,14 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteHolder> {
     @Override
     public NoteHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.note_item, parent, false);
+        Log.d(TAG, "ViewHolder created");
         return new NoteHolder(view);
     }
 
     @Override
     public void onBindViewHolder(NoteHolder holder, int position) {
-            holder.bind(notes.get(position));
+        holder.bind(position);
+        Log.d(TAG, "ViewHolder binded");
     }
 
     @Override
@@ -53,16 +64,25 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteHolder> {
 
         private TextView tvTitle;
         private CardView cardView;
+        private int position = 0;
 
         public NoteHolder(View view) {
             super(view);
             tvTitle = (TextView) view.findViewById(R.id.title_id);
             cardView = (CardView) view.findViewById(R.id.cv_id);
+            cardView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (listener != null)
+                        listener.onClick(view, position);
+                }
+            });
             //добавит листенер
         }
 
-        public void bind(Note note) {
-            tvTitle.setText(note.getTitle());
+        public void bind(int position) {
+            this.position = position;
+            tvTitle.setText(notes.get(position).getTitle());
         }
     }
 }

@@ -37,21 +37,22 @@ public class App extends Application {
     }
 
     public List<Note> readNotes() {
-        List<Note> noteList = new ArrayList<>();
+        List<Note>  noteList = new ArrayList<>();
         File file = new File(getFilesDir(), NOTES_FILE);
-        if (!file.exists()) return null;
+        if (file.exists()) {
 
-        try {
-            ObjectInputStream inObj = new ObjectInputStream(new FileInputStream(file));
-            Note[] notes = (Note[]) inObj.readObject();
-            for (Note n : notes) {
-                noteList.add(n);
+            try {
+                ObjectInputStream inObj = new ObjectInputStream(new FileInputStream(file));
+                Note[] notes = (Note[]) inObj.readObject();
+                for (Note n : notes) {
+                    noteList.add(n);
+                }
+                inObj.close();
+            } catch (IOException e) {
+                Log.d("READ_NOTES", e.getMessage());
+            } catch (ClassNotFoundException e) {
+                Log.d("READ_NOTES", e.getMessage());
             }
-            inObj.close();
-        } catch (IOException e) {
-            Log.d("READ_NOTES", e.getMessage());
-        } catch (ClassNotFoundException e) {
-            Log.d("READ_NOTES", e.getMessage());
         }
         return noteList;
     }

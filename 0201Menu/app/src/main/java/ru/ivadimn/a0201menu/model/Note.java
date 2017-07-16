@@ -38,6 +38,7 @@ public class Note implements Serializable, Parcelable {
     @Override
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeString(title);
+        parcel.writeString(content);
     }
 
     public static final Creator<Note> CREATOR = new Creator<Note>() {

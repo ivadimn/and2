@@ -46,6 +46,17 @@ public class EditActivity extends AppCompatActivity {
         return true;
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()) {
+            case R.id.menuitem_save:
+                save();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
     private void initUI() {
         edTitle = (EditText) findViewById(R.id.edit_title_id);
         edTitle.addTextChangedListener(new TextWatcher() {
@@ -68,8 +79,9 @@ public class EditActivity extends AppCompatActivity {
 
     private void initData() {
         Intent intent = getIntent();
-        if (intent != null) {
-            Note note = intent.getParcelableExtra(Note.NOTE);
+        if (intent == null) return;
+        Note note = intent.getParcelableExtra(Note.NOTE);
+        if (note != null) {
             edTitle.setText(note.getTitle());
             edText.setText(note.getContent());
         }
