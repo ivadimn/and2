@@ -27,7 +27,7 @@ public class StandartDlg extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
         Dialog dialog = new AlertDialog.Builder(getActivity()).create();
-        Bundle bundle getArguments();
+        Bundle bundle = getArguments();
         dialog.setTitle(bundle.getString(TITLE, ""));
 
 

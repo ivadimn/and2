@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="text_margin">4dp</dimen>
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="item_height">40dp</dimen>
+
+    <!--размеры отступов и полей-->
+    <dimen name="view_margin">8dp</dimen>
+    <dimen name="view_padding">4dp</dimen>
+    <dimen name="corner_radius">2dp</dimen>
+    <dimen name="elevation_size">8dp</dimen>
+    <dimen name="text_view_elevation">8dp</dimen>
+</resources>
