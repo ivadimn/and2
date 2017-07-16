@@ -17,15 +17,24 @@ import ru.ivadimn.a0201menu.model.Note;
 
 public class EditActivity extends AppCompatActivity {
 
+    public static final String NOTE = "NOTE";
+    public static final String INDEX = "INDEX";
+
     private EditText edTitle;
     private EditText edText;
-    private MenuItem saveItem;
+    private int index = -1;
 
-    public static Intent createIntent(Context context, Note note) {
+    public static Intent createIntent(Context context, Note note, int position) {
         Intent intent = new Intent(context, EditActivity.class);
-        if (note != null)
-            intent.putExtra(Note.NOTE, (Parcelable) note);
+        if (note != null) {
+            intent.putExtra(INDEX, position);
+            intent.putExtra(NOTE, (Parcelable) note);
+        }
         return intent;
+    }
+
+    public static Note getNote(Intent intent) {
+        return intent.getParcelableExtra(NOTE);
     }
 
     @Override
@@ -41,8 +50,6 @@ public class EditActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.edit_menu, menu);
-        saveItem = menu.findItem(R.id.menuitem_save);
-        saveItem.setVisible(false);
         return true;
     }
 
@@ -59,20 +66,6 @@ public class EditActivity extends AppCompatActivity {
 
     private void initUI() {
         edTitle = (EditText) findViewById(R.id.edit_title_id);
-        edTitle.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                   saveItem.setVisible(charSequence.length() > 0);
-            }
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
         edText = (EditText) findViewById(R.id.edit_text_id);
 
     }
@@ -80,17 +73,20 @@ public class EditActivity extends AppCompatActivity {
     private void initData() {
         Intent intent = getIntent();
         if (intent == null) return;
-        Note note = intent.getParcelableExtra(Note.NOTE);
+        Note note = intent.getParcelableExtra(NOTE);
         if (note != null) {
             edTitle.setText(note.getTitle());
             edText.setText(note.getContent());
         }
+        index = intent.getIntExtra(INDEX, -1);
+
     }
 
     private void save() {
         Note note = new Note(edTitle.getText().toString(), edText.getText().toString());
         Intent data = new Intent();
-        data.putExtra(Note.NOTE, (Parcelable) note);
+        data.putExtra(INDEX, index);
+        data.putExtra(NOTE, (Parcelable) note);
         setResult(RESULT_OK, data);
         finish();
     }

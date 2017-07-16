@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Lesson1</string>\
+    <string-array name="actions">
+        <item>Add</item>
+        <item>Edit</item>
+        <item>Remove</item>
+    </string-array>
+</resources>

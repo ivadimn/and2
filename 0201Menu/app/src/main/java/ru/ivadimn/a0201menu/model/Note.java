@@ -11,8 +11,6 @@ import java.io.Serializable;
 
 public class Note implements Serializable, Parcelable {
 
-    public static final String NOTE = "NOTE";
-
     private String title;
     private String content;
 

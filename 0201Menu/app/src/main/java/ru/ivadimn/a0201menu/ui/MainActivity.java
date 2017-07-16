@@ -71,20 +71,28 @@ public class MainActivity extends AppCompatActivity implements NoteAdapter.OnRVC
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(resultCode == RESULT_OK) {
             if (requestCode == REQUEST_ADD) {
-                Note note = data.getParcelableExtra(Note.NOTE);
+                Note note = EditActivity.getNote(data);
                 notes.add(note);
                 adapter.notifyDataSetChanged();
+            }
+            else if (requestCode == REQUEST_EDIT) {
+                int position = data.getIntExtra(EditActivity.INDEX, -1);
+                Note note = EditActivity.getNote(data);
+                if (position > -1) {
+                    notes.set(position, note);
+                    adapter.notifyDataSetChanged();
+                }
             }
         }
     }
 
     private void addNote() {
-        Intent intent = EditActivity.createIntent(this, null);
+        Intent intent = EditActivity.createIntent(this, null, -1);
         startActivityForResult(intent, REQUEST_ADD);
     }
 
     private void editNote(int position) {
-        Intent intent = EditActivity.createIntent(this, notes.get(position));
+        Intent intent = EditActivity.createIntent(this, notes.get(position), position);
         startActivityForResult(intent, REQUEST_EDIT);
     }
 
