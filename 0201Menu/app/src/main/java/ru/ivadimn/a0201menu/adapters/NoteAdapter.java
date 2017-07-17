@@ -1,10 +1,12 @@
 package ru.ivadimn.a0201menu.adapters;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.ContentFrameLayout;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.util.SparseIntArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,20 +27,27 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteHolder> {
     private List<Note> notes;
     private Context context;
     private OnRVClickListener listener;
+    private SparseIntArray selectedList = new SparseIntArray();
+
+    private boolean actionMode = false;
 
     public interface OnRVClickListener {
         public void onClick(View view, int position);
         public void onLongClick(View view, int position);
     }
 
-    public NoteAdapter(Context context, OnRVClickListener listener) {
+    public NoteAdapter(Context context) {
         this.context = context;
-        this.listener = listener;
+
     }
 
     public void updateData(List<Note> notes) {
         this.notes = notes;
         notifyDataSetChanged();
+    }
+
+    public void setListener(OnRVClickListener listener) {
+        this.listener = listener;
     }
 
     @Override
@@ -73,16 +82,53 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteHolder> {
             cardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    if (actionMode)
+                        setSelected();
                     if (listener != null)
                         listener.onClick(view, position);
                 }
             });
-            //добавит листенер
+            cardView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    if (!actionMode) {
+                        actionMode = true;
+                        setSelected();
+                        if (listener != null)
+                            listener.onLongClick(view, position);
+                    }
+                    return true;
+                }
+            });
         }
 
         public void bind(int position) {
             this.position = position;
             tvTitle.setText(notes.get(position).getTitle());
+            if(actionMode && selectedList.indexOfKey(position) > -1)
+                cardView.setBackgroundColor(ContextCompat.getColor(cardView.getContext(), R.color.colorAccent));
+            else
+                cardView.setBackgroundColor(ContextCompat.getColor(cardView.getContext(), R.color.card_background_color));
         }
+
+        private void setSelected() {
+            if (selectedList.indexOfKey(position) > -1)
+                selectedList.delete(position);
+            else
+                selectedList.put(position, position);
+            notifyItemChanged(position);
+        }
+    }
+
+    public SparseIntArray getSelectedList() {
+        return selectedList;
+    }
+
+    public void setActionMode(boolean actionMode) {
+        this.actionMode = actionMode;
+    }
+
+    public boolean isActionMode() {
+        return actionMode;
     }
 }

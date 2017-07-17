@@ -7,7 +7,9 @@
     android:orientation="vertical"
     tools:context="ru.ivadimn.a0201menu.ui.MainActivity">
 
-    <include layout="@layout/toolbar" />
+    <include layout="@layout/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/notes_list_id"

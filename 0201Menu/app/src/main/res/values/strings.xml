@@ -9,4 +9,8 @@
     <string name="title">Title</string>
     <string name="text">Text</string>
 
+    <!-- dialog buttons-->
+    <string name="btn_ok">Ok</string>
+    <string name="btn_cancel">Cancel</string>
+
 </resources>

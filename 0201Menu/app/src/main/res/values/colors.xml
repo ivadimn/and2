@@ -2,10 +2,10 @@
 <resources>
     <color name="colorPrimary">@color/Brown_600</color>
     <color name="colorPrimaryDark">@color/Brown_900</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">#f70b0f</color>
 
     <color name="textColorPrimary">#fdfdfa</color>
-    <color name="windowBackground">#e1e5ea</color>
+    <color name="windowBackground">@color/background_color</color>
     <color name="navigationBarColor">#1F1F1F</color>
 
     <color name="background_color">@color/Brown_50</color>
