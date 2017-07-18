@@ -163,7 +163,6 @@ public class MainActivity extends AppCompatActivity implements NoteAdapter.OnRVC
                     editNote(adapter.getSelectedList().keyAt(0));
                     //или можно так
                     //editNoteDlg(adapter.getSelectedList().keyAt(0));
-                    adapter.notifyDataSetChanged();
                     break;
                 case R.id.menuitem_delete:
                     deleteNotes(adapter.getSelectedList());
@@ -192,7 +191,6 @@ public class MainActivity extends AppCompatActivity implements NoteAdapter.OnRVC
                         editNote(position);
                         //или можно так
                         //editNoteDlg(position);
-                        adapter.notifyDataSetChanged();
                         break;
                     case R.id.menuitem_delete:
                         notes.remove(position);
