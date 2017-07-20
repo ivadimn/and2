@@ -29,7 +29,6 @@
             android:textColor="@color/text_edit_color"
             android:inputType="text"
             android:hint="@string/person_name"
-            android:enabled="false"
             />
     </android.support.design.widget.TextInputLayout>
 
@@ -46,7 +45,6 @@
             android:inputType="phone"
             android:hint="@string/person_phone"
             android:textColor="@color/text_edit_color"
-            android:enabled="false"
             />
     </android.support.design.widget.TextInputLayout>
 
@@ -63,7 +61,6 @@
             android:inputType="textEmailAddress"
             android:hint="@string/person_email"
             android:textColor="@color/text_edit_color"
-            android:enabled="false"
             />
     </android.support.design.widget.TextInputLayout>
 </LinearLayout>

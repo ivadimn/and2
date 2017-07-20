@@ -11,9 +11,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import ru.ivadimn.a0202storage.R;
-import ru.ivadimn.a0202storage.utils.SettingStore;
-
-import static android.R.attr.id;
+import ru.ivadimn.a0202storage.storage.SettingStore;
 
 /**
  * Created by vadim on 19.07.17.

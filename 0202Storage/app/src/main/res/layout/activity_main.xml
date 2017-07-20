@@ -23,12 +23,7 @@
             android:minHeight="?attr/actionBarSize"
             app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             android:background="?attr/colorPrimary">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:text="@string/menuitem_delete"
-                />
+
         </android.support.v7.widget.Toolbar>
 
         <FrameLayout

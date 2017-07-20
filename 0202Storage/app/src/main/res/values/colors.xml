@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">@color/Brown_600</color>
     <color name="colorPrimaryDark">@color/Brown_900</color>
-    <color name="colorAccent">#f70b0f</color>
+    <color name="colorAccent">@android:color/holo_green_light</color>
 
     <color name="textColorPrimary">#fdfdfa</color>
     <color name="windowBackground">@color/background_color</color>

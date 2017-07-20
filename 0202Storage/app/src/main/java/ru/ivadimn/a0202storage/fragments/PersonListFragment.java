@@ -1,5 +1,6 @@
 package ru.ivadimn.a0202storage.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -16,9 +17,13 @@ import android.view.ViewGroup;
 import java.util.List;
 
 import ru.ivadimn.a0202storage.App;
+import ru.ivadimn.a0202storage.activities.PersonActivity;
+import ru.ivadimn.a0202storage.interfaces.IDataStore;
 import ru.ivadimn.a0202storage.model.Person;
 import ru.ivadimn.a0202storage.R;
 import ru.ivadimn.a0202storage.adapters.PersonAdapter;
+
+import static android.app.Activity.RESULT_OK;
 
 /**
  * Created by vadim on 20.07.17.
@@ -27,12 +32,15 @@ import ru.ivadimn.a0202storage.adapters.PersonAdapter;
 public class PersonListFragment extends Fragment {
 
     public static final String TAG = "LIST_PERSONS";
+    public static final int ADD_PERSON = 1;
+    public static final int EDIT_PERSON = 2;
 
     private RecyclerView list;
     private List<Person> persons;
     private PersonAdapter adapter;
     private FloatingActionButton fab;
     private MenuItem itemDelete;
+    private IDataStore store;
 
     public static Fragment createFragment() {
         Fragment fragment = new PersonListFragment();
@@ -42,7 +50,8 @@ public class PersonListFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        persons = App.getInstance().loadPersons();
+        store = App.getInstance().getStore(App.FILE_STORAGE);
+        persons = store.getList();
     }
 
     @Nullable
@@ -61,23 +70,30 @@ public class PersonListFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_person, menu);
+        inflater.inflate(R.menu.menu_list_person, menu);
         itemDelete = menu.findItem(R.id.menuitem_delete_id);
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        App.getInstance().savePersons(persons);
+        store.saveList();
     }
 
     //
     private View.OnClickListener fabClick = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            //start edit activity
+            Intent intent = PersonActivity.createIntent(getContext(), -1);
+            startActivityForResult(intent, ADD_PERSON);
         }
     };
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK)
+            adapter.notifyDataSetChanged();
+    }
 
     private PersonAdapter.PersonClickListener personClick = new PersonAdapter.PersonClickListener() {
         @Override

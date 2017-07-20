@@ -2,6 +2,7 @@ package ru.ivadimn.a0202storage.model;
 
 import android.graphics.Bitmap;
 
+import java.io.ByteArrayOutputStream;
 import java.io.Serializable;
 
 /**
@@ -65,5 +66,13 @@ public class Person implements Serializable {
 
     public void setPhoto(byte[] photo) {
         this.photo = photo;
+    }
+
+    public void setBmpPhoto(Bitmap bmp) {
+        if (bmp != null) {
+            ByteArrayOutputStream out = new ByteArrayOutputStream();
+            bmp.compress(Bitmap.CompressFormat.JPEG, 50, out);
+            photo = out.toByteArray();
+        }
     }
 }

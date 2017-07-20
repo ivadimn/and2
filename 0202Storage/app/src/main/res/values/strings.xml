@@ -22,4 +22,5 @@
     <string name="person_email">E-mail</string>
 
     <string name="menuitem_delete">DELETE</string>
+    <string name="menuitem_save">SAVE</string>
 </resources>

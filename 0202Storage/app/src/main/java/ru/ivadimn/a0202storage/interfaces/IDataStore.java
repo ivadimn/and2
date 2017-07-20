@@ -10,8 +10,8 @@ import ru.ivadimn.a0202storage.model.Person;
 
 public interface IDataStore {
     public List<Person> getList();
-    public void saveList(List<Person> list);
-    public void add(Person person);
-    public void set(int position, Person person);
-    public void remove(Person p);
+    public void saveList();
+    public void insert(Person person);
+    public void update(int position, Person person);
+    public void delete(Person p);
 }

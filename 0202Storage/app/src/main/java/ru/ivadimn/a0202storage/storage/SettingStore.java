@@ -1,4 +1,4 @@
-package ru.ivadimn.a0202storage.utils;
+package ru.ivadimn.a0202storage.storage;
 
 import android.content.Context;
 import android.content.SharedPreferences;
