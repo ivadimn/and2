@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">Data storage</string>
+    <!-- Menu items -->
+    <string name="shared_pref">Shared preference</string>
+    <string name="internal_storage">Internal storage</string>
+    <string name="external_storage">External storage</string>
+
+    <string name="data_storage">Data storage variants</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="key">Key</string>
+    <string name="value">Value</string>
+
+    <string name="button_save">Add key</string>
+    <string name="button_find">Check key</string>
+    <string name="button_clear">Delete key</string>
+
+    <string name="person_name">Name</string>
+    <string name="person_phone">Phone</string>
+    <string name="person_email">E-mail</string>
+
+    <string name="menuitem_delete">DELETE</string>
+</resources>

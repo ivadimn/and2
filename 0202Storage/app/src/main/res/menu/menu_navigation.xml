@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <group android:id="@+id/one_group_id">
+        <item android:id="@+id/menuitem_shared_pref_id"
+            android:title="@string/shared_pref"
+            android:icon="@drawable/ic_shared_pref"
+            app:showAsAction="always"/>
+        <item android:id="@+id/menuitem_internal_storage_id"
+            android:title="@string/internal_storage"
+            android:icon="@drawable/ic_internal_storage"
+            app:showAsAction="always"/>
+        <item android:id="@+id/menuitem_external_storage_id"
+            android:title="@string/external_storage"
+            android:icon="@drawable/ic_external_storage"
+            app:showAsAction="always"/>
+    </group>
+
+
+
+</menu>
