@@ -11,7 +11,7 @@ import java.io.Serializable;
 
 public class Person implements Serializable {
 
-    private int _id;
+    private long _id;
     private String name;
     private String phone;
     private String email;
@@ -28,11 +28,11 @@ public class Person implements Serializable {
         this.email = email;
     }
 
-    public int get_id() {
+    public long get_id() {
         return _id;
     }
 
-    public void set_id(int _id) {
+    public void set_id(long _id) {
         this._id = _id;
     }
 

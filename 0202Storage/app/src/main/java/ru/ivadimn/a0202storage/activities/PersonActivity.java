@@ -21,11 +21,13 @@ import ru.ivadimn.a0202storage.App;
 import ru.ivadimn.a0202storage.R;
 import ru.ivadimn.a0202storage.interfaces.IDataStore;
 import ru.ivadimn.a0202storage.model.Person;
+import ru.ivadimn.a0202storage.storage.StorageFactory;
 
 public class PersonActivity extends AppCompatActivity {
 
     public static final String TAG = "PERSON";
     public static final String INDEX = "INDEX";
+    public static final String KEY = "KEY";
 
     public static final int REQUEST_PHOTO = 2;
 
@@ -37,12 +39,14 @@ public class PersonActivity extends AppCompatActivity {
 
     private Bitmap bmpPhoto = null;
     private int position = -1;
+    private long key;
 
 
 
-    public static Intent createIntent(Context context, int position) {
+    public static Intent createIntent(Context context, int position, long key) {
         Intent intent = new Intent(context, PersonActivity.class);
         intent.putExtra(INDEX, position);
+        intent.putExtra(KEY, key);
         return intent;
     }
 
@@ -52,6 +56,7 @@ public class PersonActivity extends AppCompatActivity {
         setContentView(R.layout.activity_person);
         Intent intent = getIntent();
         position = intent.getIntExtra(INDEX, -1);
+        key = intent.getLongExtra(KEY, -1);
         setTitle("Edit person");
         initUI();
         initData();
@@ -107,7 +112,7 @@ public class PersonActivity extends AppCompatActivity {
 
     private void initData() {
         if (position == -1) return;
-        Person p = App.getInstance().getStore(App.FILE_STORAGE).getList().get(position);
+        Person p = StorageFactory.getStorage().getList().get(position);
         byte[] b = p.getPhoto();
         if (b != null) {
             photo.setImageBitmap(BitmapFactory.decodeByteArray(b, 0, b.length));
@@ -148,7 +153,7 @@ public class PersonActivity extends AppCompatActivity {
 
     private void savePerson() {
         Person p = getData();
-        IDataStore store = App.getInstance().getStore(App.FILE_STORAGE);
+        IDataStore store = StorageFactory.getStorage();
         if (position == -1)
             store.insert(p);
         else
@@ -158,6 +163,7 @@ public class PersonActivity extends AppCompatActivity {
     private Person getData() {
         Person p = new Person(name.getText().toString(), phone.getText().toString(),
                 email.getText().toString());
+        p.set_id(key);
         if (bmpPhoto != null) {
             p.setBmpPhoto(bmpPhoto);
         }

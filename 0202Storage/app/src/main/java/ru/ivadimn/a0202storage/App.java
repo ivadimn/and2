@@ -14,6 +14,7 @@ import java.util.List;
 
 import ru.ivadimn.a0202storage.interfaces.IDataStore;
 import ru.ivadimn.a0202storage.model.Person;
+import ru.ivadimn.a0202storage.storage.DatabaseStorage;
 import ru.ivadimn.a0202storage.storage.FileStorage;
 
 /**
@@ -22,9 +23,7 @@ import ru.ivadimn.a0202storage.storage.FileStorage;
 
 public class App extends Application {
 
-    public static final int FILE_STORAGE = 1;
 
-    private FileStorage fileStorage;
 
     private static App instance;
     @Override
@@ -35,18 +34,6 @@ public class App extends Application {
     public static App getInstance() {
         return instance;
     }
-
-    public IDataStore getStore(int typeStorage) {
-        switch(typeStorage) {
-            case FILE_STORAGE:
-                if (fileStorage == null)
-                    fileStorage = new FileStorage(getApplicationContext());
-                return fileStorage;
-            default:
-                return null;
-        }
-    }
-
 
 }
 

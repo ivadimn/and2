@@ -6,12 +6,12 @@
             android:title="@string/shared_pref"
             android:icon="@drawable/ic_shared_pref"
             app:showAsAction="always"/>
-        <item android:id="@+id/menuitem_internal_storage_id"
-            android:title="@string/internal_storage"
+        <item android:id="@+id/menuitem_file_storage_id"
+            android:title="@string/file_storage"
             android:icon="@drawable/ic_internal_storage"
             app:showAsAction="always"/>
-        <item android:id="@+id/menuitem_external_storage_id"
-            android:title="@string/external_storage"
+        <item android:id="@+id/menuitem_database_storage_id"
+            android:title="@string/database_storage"
             android:icon="@drawable/ic_external_storage"
             app:showAsAction="always"/>
     </group>

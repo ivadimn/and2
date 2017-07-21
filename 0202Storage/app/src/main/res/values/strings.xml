@@ -2,8 +2,8 @@
     <string name="app_name">Data storage</string>
     <!-- Menu items -->
     <string name="shared_pref">Shared preference</string>
-    <string name="internal_storage">Internal storage</string>
-    <string name="external_storage">External storage</string>
+    <string name="file_storage">File storage</string>
+    <string name="database_storage">Database storage</string>
 
     <string name="data_storage">Data storage variants</string>
 

@@ -14,9 +14,12 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import java.util.List;
+
 import ru.ivadimn.a0202storage.R;
 import ru.ivadimn.a0202storage.fragments.PersonListFragment;
 import ru.ivadimn.a0202storage.fragments.SharePrefFragment;
+import ru.ivadimn.a0202storage.storage.StorageFactory;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
@@ -24,6 +27,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private NavigationView navigation;
     private ActionBarDrawerToggle toggle;
     private FragmentManager fragmentManager;
+
+    public interface OnBackPressedListener {
+        public boolean isSelectedMode();
+        public void backToNormalMode();
+    }
 
 
     @Override
@@ -59,8 +67,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void onBackPressed() {
         if (drawerLayout.isDrawerOpen(navigation))
             drawerLayout.closeDrawers();
-        else
-        super.onBackPressed();
+        else {
+            List<Fragment> fragmentList = getSupportFragmentManager().getFragments();
+            if (fragmentList != null && fragmentList.size() > 0) {
+                for(Fragment fragment : fragmentList){
+                    if(fragment instanceof OnBackPressedListener){
+                        if(((OnBackPressedListener)fragment).isSelectedMode()) {
+                            ((OnBackPressedListener) fragment).backToNormalMode();
+                            return;
+                        }
+                    }
+                }
+                super.onBackPressed();
+            }
+            else
+                super.onBackPressed();
+        }
     }
 
     @Override
@@ -79,10 +101,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.menuitem_shared_pref_id:
                 showFragment(SharePrefFragment.createFragment());
                 break;
-            case R.id.menuitem_internal_storage_id:
-                showFragment(PersonListFragment.createFragment());
+            case R.id.menuitem_file_storage_id:
+                showFragment(PersonListFragment.createFragment(StorageFactory.FILE_STORAGE));
                 break;
-            case R.id.menuitem_external_storage_id:
+            case R.id.menuitem_database_storage_id:
+                showFragment(PersonListFragment.createFragment(StorageFactory.DATABASE_STORAGE));
                 break;
         }
         drawerLayout.closeDrawers();

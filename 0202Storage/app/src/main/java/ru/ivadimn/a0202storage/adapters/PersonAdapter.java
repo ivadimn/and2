@@ -53,28 +53,7 @@ public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.PersonView
     @Override
     public void onBindViewHolder(PersonViewHolder holder, final int position) {
         holder.bind(persons.get(position), position);
-        holder.getCardView().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (listener != null && !selectedMode)
-                    listener.onClick(v, position);
-            }
-        });
-        holder.getCardView().setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                if (listener != null && !selectedMode)
-                    listener.onLongClick(v, position);
-                return true;
-            }
-        });
-        holder.getDelete().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                CheckBox ch = (CheckBox) v;
-                //persons.get(position).setDelete(ch.isChecked());
-            }
-        });
+
 
     }
 
@@ -100,13 +79,33 @@ public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.PersonView
             name = (TextView) itemView.findViewById(R.id.name_id);
             phone = (TextView) itemView.findViewById(R.id.phone_id);
             delete = (CheckBox) itemView.findViewById(R.id.delete_id);
+            cardView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (selectedMode)
+                        setSelected();
+                    else if (listener != null)
+                        listener.onClick(view, position);
+                }
+            });
+            cardView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    if (!selectedMode) {
+                        selectedMode = true;
+                        setSelected();
+                        if (listener != null)
+                            listener.onLongClick(view, position);
+                    }
+                    return true;
+                }
+            });
         }
 
         public void bind(Person p, int position) {
             this.position = position;
             Bitmap bmp;;
             byte[] pt = p.getPhoto();
-
             if (pt == null) {
                 photo.setImageResource(R.drawable.person_small);
             }
@@ -118,6 +117,12 @@ public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.PersonView
             phone.setText(p.getPhone());
            // delete.setChecked(p.isDelete());
             delete.setVisibility(selectedMode ? View.VISIBLE : View.INVISIBLE);
+            if(selectedMode) {
+                if (selectedList.indexOfKey(position) > -1)
+                    delete.setChecked(true);
+                else
+                    delete.setChecked(false);
+            }
         }
 
         public CheckBox getDelete() {
@@ -126,6 +131,14 @@ public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.PersonView
 
         public CardView getCardView() {
             return cardView;
+        }
+
+        private void setSelected() {
+            if (selectedList.indexOfKey(position) > -1)
+                selectedList.delete(position);
+            else
+                selectedList.put(position, position);
+            notifyItemChanged(position);
         }
     }
 
@@ -144,4 +157,6 @@ public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.PersonView
     public void setSelectedMode(boolean selectedMode) {
         this.selectedMode = selectedMode;
     }
+
+
 }
