@@ -21,7 +21,7 @@ import ru.ivadimn.a0202storage.model.Person;
 
 public class FileStorage implements IDataStore {
 
-    public static final String FILE = "persons";
+    public static final String FILE = "persons1";
     public static final String TAG = "FILE_STORAGE";
 
     private List<Person> list;
@@ -45,11 +45,7 @@ public class FileStorage implements IDataStore {
 
         try {
             ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
-            Person[] pa = new Person[list.size()];
-            for (int i = 0; i < list.size(); i++) {
-                pa[i] = list.get(i);
-            }
-            out.writeObject(pa);
+            out.writeObject(list);
             out.flush();
             out.close();
         } catch (IOException e) {
@@ -73,29 +69,26 @@ public class FileStorage implements IDataStore {
         list.remove(p);
     }
 
-    private List<Person> generatePersons() {
+    /*private List<Person> generatePersons() {
         List<Person> p = new ArrayList<>();
         p.add(new Person("vadim ivanov", "+79116789054", "aaaa@mail.com"));
         p.add(new Person("peter sidoprov", "+79566789054", "bbb@mail.com"));
         p.add(new Person("vasia petrov", "+79566789054", "bbb@mail.com"));
         p.add(new Person("misha kuznecov", "+79566789054", "bbb@mail.com"));
         return p;
-    }
+    }*/
 
     private List<Person> readFromFile() {
         File file = new File(context.getFilesDir(), FILE);
+        List<Person> p = new ArrayList<>();
 
         if (!file.exists()) {
-            return generatePersons();
+            return p;
         }
-        Person[] pa;
-        List<Person> p = new ArrayList<>();
+
         try {
             ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
-            pa = (Person[]) in.readObject();
-            for (int i = 0; i < pa.length; i++) {
-                p.add(pa[i]);
-            }
+            p = (List<Person>) in.readObject();
             in.close();
         } catch (Exception e) {
             e.printStackTrace();

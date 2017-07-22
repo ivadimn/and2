@@ -51,13 +51,7 @@ public class DatabaseStorage implements IDataStore {
     @Override
     public void insert(Person person) {
         SQLiteDatabase db = null;
-        ContentValues values = new ContentValues();
-        values.put(PersonContract.PersonEntry.COLUMN_NAME, person.getName());
-        values.put(PersonContract.PersonEntry.COLUMN_PHONE, person.getPhone());
-        values.put(PersonContract.PersonEntry.COLUMN_EMAIL, person.getEmail());
-        byte[] b = person.getPhoto();
-        values.put(PersonContract.PersonEntry.COLUMN_PHOTO, b);
-
+        ContentValues values = getContentValues(person);
         try {
             db = dbHelper.getWritableDatabase();
             long rowId = db.insert(PersonContract.PersonEntry.PERSON_TABLE, null, values);
@@ -75,17 +69,11 @@ public class DatabaseStorage implements IDataStore {
     @Override
     public void update(int position, Person person) {
         SQLiteDatabase db = null;
-        ContentValues values = new ContentValues();
-        values.put(PersonContract.PersonEntry.COLUMN_NAME, person.getName());
-        values.put(PersonContract.PersonEntry.COLUMN_PHONE, person.getPhone());
-        values.put(PersonContract.PersonEntry.COLUMN_EMAIL, person.getEmail());
-        byte[] b = person.getPhoto();
-        values.put(PersonContract.PersonEntry.COLUMN_PHOTO, b);
-        long id = person.get_id();
+        ContentValues values = getContentValues(person);
         try {
             db = dbHelper.getWritableDatabase();
             int count  = db.update(PersonContract.PersonEntry.PERSON_TABLE,
-                    values, PersonContract.PersonEntry._ID + " = ?", new String[] {Long.toString(id)});
+                    values, PersonContract.PersonEntry._ID + " = ?", new String[] {Long.toString(person.get_id())});
             list.set(position, person);
         }
         catch(SQLiteException e) {
@@ -124,15 +112,7 @@ public class DatabaseStorage implements IDataStore {
                     PersonContract.PersonEntry.PROJECTION_ALL, null, null, null, null,
                     PersonContract.PersonEntry._ID);
             while(c.moveToNext()) {
-                Person person = new Person();
-                long id = c.getLong(c.getColumnIndex(PersonContract.PersonEntry._ID));
-                person.set_id(id);
-                person.setName(c.getString(c.getColumnIndex(PersonContract.PersonEntry.COLUMN_NAME)));
-                person.setPhone(c.getString(c.getColumnIndex(PersonContract.PersonEntry.COLUMN_PHONE)));
-                person.setEmail(c.getString(c.getColumnIndex(PersonContract.PersonEntry.COLUMN_EMAIL)));
-                byte[] b = c.getBlob(c.getColumnIndex(PersonContract.PersonEntry.COLUMN_PHOTO));
-                person.setPhoto(b);
-                p.add(person);
+                p.add(getPerson(c));
             }
         }
         catch (SQLiteException ex) {
@@ -144,6 +124,29 @@ public class DatabaseStorage implements IDataStore {
         return p;
     }
 
+    //сформировать contentValues для insert и update
+    private ContentValues getContentValues(Person person) {
+        ContentValues values = new ContentValues();
+        values.put(PersonContract.PersonEntry.COLUMN_NAME, person.getName());
+        values.put(PersonContract.PersonEntry.COLUMN_PHONE, person.getPhone());
+        values.put(PersonContract.PersonEntry.COLUMN_EMAIL, person.getEmail());
+        values.put(PersonContract.PersonEntry.COLUMN_HOBBY, person.getHobby());
+        byte[] b = person.getPhoto();
+        values.put(PersonContract.PersonEntry.COLUMN_PHOTO, b);
+        return values;
+    }
+
+    private Person getPerson(Cursor c) {
+        Person person = new Person();
+        person.set_id(c.getLong(c.getColumnIndex(PersonContract.PersonEntry._ID)));
+        person.setName(c.getString(c.getColumnIndex(PersonContract.PersonEntry.COLUMN_NAME)));
+        person.setPhone(c.getString(c.getColumnIndex(PersonContract.PersonEntry.COLUMN_PHONE)));
+        person.setEmail(c.getString(c.getColumnIndex(PersonContract.PersonEntry.COLUMN_EMAIL)));
+        person.setHobby(c.getString(c.getColumnIndex(PersonContract.PersonEntry.COLUMN_HOBBY)));
+        byte[] b = c.getBlob(c.getColumnIndex(PersonContract.PersonEntry.COLUMN_PHOTO));
+        person.setPhoto(b);
+        return person;
+    }
     /*private void saveImage(String fname, byte[] b) {
 
         File file = new File(context.getFilesDir(), fname);

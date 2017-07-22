@@ -18,6 +18,7 @@ import java.util.List;
 
 import ru.ivadimn.a0202storage.R;
 import ru.ivadimn.a0202storage.fragments.PersonListFragment;
+import ru.ivadimn.a0202storage.fragments.PictureFragment;
 import ru.ivadimn.a0202storage.fragments.SharePrefFragment;
 import ru.ivadimn.a0202storage.storage.StorageFactory;
 
@@ -106,6 +107,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.menuitem_database_storage_id:
                 showFragment(PersonListFragment.createFragment(StorageFactory.DATABASE_STORAGE));
+                break;
+            case R.id.menuitem_external_storage_id:
+                showFragment(PictureFragment.createFragment());
                 break;
         }
         drawerLayout.closeDrawers();

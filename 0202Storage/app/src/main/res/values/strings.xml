@@ -4,6 +4,7 @@
     <string name="shared_pref">Shared preference</string>
     <string name="file_storage">File storage</string>
     <string name="database_storage">Database storage</string>
+    <string name="composit_storage">Pictures</string>
 
     <string name="data_storage">Data storage variants</string>
 
@@ -16,10 +17,15 @@
     <string name="button_save">Add key</string>
     <string name="button_find">Check key</string>
     <string name="button_clear">Delete key</string>
+    <string name="button_camera">Camera</string>
+    <string name="button_save_image">Save</string>
+    <string name="button_load_image">Load</string>
 
     <string name="person_name">Name</string>
     <string name="person_phone">Phone</string>
     <string name="person_email">E-mail</string>
+    <string name="person_hobby">Hobby</string>
+    <string name="file_name">File</string>
 
     <string name="menuitem_delete">DELETE</string>
     <string name="menuitem_save">SAVE</string>

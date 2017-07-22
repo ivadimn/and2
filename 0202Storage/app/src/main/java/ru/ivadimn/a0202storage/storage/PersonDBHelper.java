@@ -13,19 +13,29 @@ import ru.ivadimn.a0202storage.model.PersonContract;
 public class PersonDBHelper extends SQLiteOpenHelper {
 
     public static final String DB_NAME = "contacts.db";
-    public static final int DB_VERSION = 1;
+    public static final int DB_VERSION = 2;
 
     public PersonDBHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
     }
 
     @Override
-    public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        sqLiteDatabase.execSQL(PersonContract.SQL_CREATE_TABLE);
+    public void onCreate(SQLiteDatabase db) {
+        updateDatabase(db, 0, DB_VERSION);
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
+    public void onUpgrade(SQLiteDatabase db, int oldVer, int newVer) {
+        updateDatabase(db, oldVer, DB_VERSION);
+    }
 
+    private void updateDatabase(SQLiteDatabase db, int oldVer, int newVer) {
+        if (oldVer < 1) {
+            db.execSQL(PersonContract.SQL_CREATE_TABLE);
+        }
+        if (oldVer < 2) {
+            db.execSQL(PersonContract.SQL_ALTER_TABLE_2);
+            db.execSQL(PersonContract.SQL_UPDATE_TABLE_2);
+        }
     }
 }

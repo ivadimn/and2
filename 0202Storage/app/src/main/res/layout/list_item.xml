@@ -30,8 +30,8 @@
 
             <ImageView
                 android:id="@+id/photo_id"
-                android:layout_width="56dp"
-                android:layout_height="56dp"
+                android:layout_width="@dimen/image_width"
+                android:layout_height="@dimen/image_height"
                 android:layout_margin="@dimen/view_margin"
                 android:scaleType="centerCrop"
                 android:tag="photo"

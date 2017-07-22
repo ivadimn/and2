@@ -12,6 +12,10 @@
             app:showAsAction="always"/>
         <item android:id="@+id/menuitem_database_storage_id"
             android:title="@string/database_storage"
+            android:icon="@drawable/ic_database_storage"
+            app:showAsAction="always"/>
+        <item android:id="@+id/menuitem_external_storage_id"
+            android:title="@string/composit_storage"
             android:icon="@drawable/ic_external_storage"
             app:showAsAction="always"/>
     </group>

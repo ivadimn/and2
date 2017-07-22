@@ -15,6 +15,7 @@ public class Person implements Serializable {
     private String name;
     private String phone;
     private String email;
+    private String hobby;       //версия 2
     private byte[] photo;
     //private Bitmap photo;
 
@@ -22,10 +23,11 @@ public class Person implements Serializable {
         //no-op
     }
 
-    public Person(String name, String phone, String email) {
+    public Person(String name, String phone, String email, String hobby) {
         this.name = name;
         this.phone = phone;
         this.email = email;
+        this.hobby = hobby;
     }
 
     public long get_id() {
@@ -74,5 +76,13 @@ public class Person implements Serializable {
             bmp.compress(Bitmap.CompressFormat.JPEG, 50, out);
             photo = out.toByteArray();
         }
+    }
+
+    public String getHobby() {
+        return hobby;
+    }
+
+    public void setHobby(String hobby) {
+        this.hobby = hobby;
     }
 }

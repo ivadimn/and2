@@ -35,6 +35,7 @@ public class PersonActivity extends AppCompatActivity {
     private EditText name;
     private EditText phone;
     private EditText email;
+    private EditText hobby;
     private MenuItem itemSave;
 
     private Bitmap bmpPhoto = null;
@@ -107,7 +108,9 @@ public class PersonActivity extends AppCompatActivity {
         });
         phone = (EditText) findViewById(R.id.person_phone_id);
         email = (EditText) findViewById(R.id.person_email_id);
+        hobby = (EditText) findViewById(R.id.person_hobby_id);
         photo.setImageResource(R.drawable.person_big);
+
     }
 
     private void initData() {
@@ -115,7 +118,8 @@ public class PersonActivity extends AppCompatActivity {
         Person p = StorageFactory.getStorage().getList().get(position);
         byte[] b = p.getPhoto();
         if (b != null) {
-            photo.setImageBitmap(BitmapFactory.decodeByteArray(b, 0, b.length));
+            bmpPhoto = BitmapFactory.decodeByteArray(b, 0, b.length);
+            photo.setImageBitmap(bmpPhoto);
         }
         else {
             photo.setImageResource(R.drawable.person_big);
@@ -123,6 +127,7 @@ public class PersonActivity extends AppCompatActivity {
         name.setText(p.getName());
         phone.setText(p.getPhone());
         email.setText(p.getEmail());
+        hobby.setText(p.getHobby());
     }
 
 
@@ -162,7 +167,7 @@ public class PersonActivity extends AppCompatActivity {
 
     private Person getData() {
         Person p = new Person(name.getText().toString(), phone.getText().toString(),
-                email.getText().toString());
+                email.getText().toString(), hobby.getText().toString());
         p.set_id(key);
         if (bmpPhoto != null) {
             p.setBmpPhoto(bmpPhoto);

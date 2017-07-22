@@ -144,6 +144,7 @@ public class PersonListFragment extends Fragment implements MainActivity.OnBackP
 
     private void startSelectedMode() {
         itemDelete.setVisible(true);
+        fab.setVisibility(View.INVISIBLE);
         adapter.notifyDataSetChanged();
 
     }
@@ -152,6 +153,7 @@ public class PersonListFragment extends Fragment implements MainActivity.OnBackP
        adapter.setSelectedMode(false);
        adapter.getSelectedList().clear();
        itemDelete.setVisible(false);
+       fab.setVisibility(View.VISIBLE);
        adapter.notifyDataSetChanged();
     }
 
