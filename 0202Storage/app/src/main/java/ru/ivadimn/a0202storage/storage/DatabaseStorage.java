@@ -17,6 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ru.ivadimn.a0202storage.interfaces.IDataStore;
+import ru.ivadimn.a0202storage.model.Friend;
+import ru.ivadimn.a0202storage.model.FriendContract;
 import ru.ivadimn.a0202storage.model.Person;
 import ru.ivadimn.a0202storage.model.PersonContract;
 
@@ -130,7 +132,7 @@ public class DatabaseStorage implements IDataStore {
         values.put(PersonContract.PersonEntry.COLUMN_NAME, person.getName());
         values.put(PersonContract.PersonEntry.COLUMN_PHONE, person.getPhone());
         values.put(PersonContract.PersonEntry.COLUMN_EMAIL, person.getEmail());
-        values.put(PersonContract.PersonEntry.COLUMN_HOBBY, person.getHobby());
+        values.put(PersonContract.PersonEntry.COLUMN_BIRTHDAY, person.getBirhtday());
         byte[] b = person.getPhoto();
         values.put(PersonContract.PersonEntry.COLUMN_PHOTO, b);
         return values;
@@ -142,42 +144,69 @@ public class DatabaseStorage implements IDataStore {
         person.setName(c.getString(c.getColumnIndex(PersonContract.PersonEntry.COLUMN_NAME)));
         person.setPhone(c.getString(c.getColumnIndex(PersonContract.PersonEntry.COLUMN_PHONE)));
         person.setEmail(c.getString(c.getColumnIndex(PersonContract.PersonEntry.COLUMN_EMAIL)));
-        person.setHobby(c.getString(c.getColumnIndex(PersonContract.PersonEntry.COLUMN_HOBBY)));
+        person.setBirhtday(c.getLong(c.getColumnIndex(PersonContract.PersonEntry.COLUMN_BIRTHDAY)));
         byte[] b = c.getBlob(c.getColumnIndex(PersonContract.PersonEntry.COLUMN_PHOTO));
         person.setPhoto(b);
+        ///////////////////
+        person.setFriends(getFriends(person.get_id()));
         return person;
     }
-    /*private void saveImage(String fname, byte[] b) {
 
-        File file = new File(context.getFilesDir(), fname);
-        ByteArrayOutputStream bs = null;
+    ////////////////////////Friend operation///////////////////////////////////////
+
+    private void insertFriends(List<Friend> fs) {
+        SQLiteDatabase db = null;
+        ContentValues values = getContentValues();
+        db.
         try {
-            bs = new ByteArrayOutputStream();
-            FileOutputStream out = new FileOutputStream(file);
-            bs.write(b, 0, b.length);
-            bs.writeTo(out);
-            bs.flush();
-            bs.close();
-            out.close();
+            db = dbHelper.getWritableDatabase();
+            long rowId = db.insert(PersonContract.PersonEntry.PERSON_TABLE, null, values);
+            person.set_id(rowId);
+            list.add(person);
         }
-        catch (IOException ex) {
-            ex.printStackTrace();
+        catch (SQLiteException ex) {
+            Toast.makeText(context, "Insert error: " + ex.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+        finally {
+            db.close();
         }
     }
 
-    private byte[] readImage(String fname) {
-        byte[] b = null;
-        File file = new File(context.getFilesDir(), fname);
-        if (!file.exists()) return null;
-        b = new byte[(int)file.length()];
+    private List<Friend> getFriends(long personId) {
+        List<Friend> fs = new ArrayList<Friend>();
+        SQLiteDatabase db = null;
         try {
-            FileInputStream in = new FileInputStream(file);
-            in.read(b);
-            in.close();
+            db = dbHelper.getReadableDatabase();
+            Cursor c = db.query(FriendContract.FriendEntry.FRIEND_TABLE,
+                    FriendContract.FriendEntry.PROJECTION_ALL, FriendContract.FriendEntry.COLUMN_PERSON_ID + " = ?",
+                    new String[] {Long.toString(personId)}, null, null, FriendContract.FriendEntry._ID);
+            while(c.moveToNext()) {
+                fs.add(getFriend(c));
+            }
         }
-        catch (IOException ex) {
-            ex.printStackTrace();
+        catch (SQLiteException ex) {
+            Toast.makeText(context, "Insert error: " + ex.getMessage(), Toast.LENGTH_SHORT).show();
         }
-        return b;
-    } */
+        finally {
+            db.close();
+        }
+        return fs;
+    }
+
+    private Friend getFriend(Cursor c) {
+        Friend friend = new Friend();
+        friend.set_id(c.getLong(c.getColumnIndex(FriendContract.FriendEntry._ID)));
+        friend.setPersonId(c.getLong(c.getColumnIndex(FriendContract.FriendEntry.COLUMN_PERSON_ID)));
+        friend.setName(c.getString(c.getColumnIndex(FriendContract.FriendEntry.COLUMN_NAME)));
+        return friend;
+    }
+
+    private List<ContentValues> getFriendContentValues(List<Friend> fs) {
+        List<ContentValues> cvl = new ArrayList<ContentValues>();
+        for (int i = 0; i < fs.size(); i++) {
+            ContentValues cv = new ContentValues();
+            cv.put(FriendContract.FriendEntry.COLUMN_PERSON_ID, fs.get().getPersonId());
+        }
+        return cvl;
+    }
 }

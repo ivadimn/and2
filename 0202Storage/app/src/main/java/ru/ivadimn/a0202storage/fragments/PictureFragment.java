@@ -102,7 +102,7 @@ public class PictureFragment extends Fragment {
             Uri uri = data.getData();
             try {
                 bmpPhoto = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), uri);
-
+                edFile.setText(data.getData().getPath());
                 image.setImageBitmap(bmpPhoto);
             } catch (IOException e) {
                 Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -123,10 +123,12 @@ public class PictureFragment extends Fragment {
             FileOutputStream fs = new FileOutputStream(new File(getDirectory().getPath() + "/" + fname + ".png"));
             ByteArrayOutputStream out = new ByteArrayOutputStream();
             bmpPhoto.compress(Bitmap.CompressFormat.PNG, 50, out);
-            byte[] b = out.toByteArray();
-            fs.write(b);
+            out.writeTo(fs);
             fs.close();
             out.close();
+            Toast.makeText(getContext(), "Фотография записана: " + getDirectory().getPath() + "/" + fname + ".png",
+                      Toast.LENGTH_SHORT).show();
+            Log.d(TAG, "Фотография записана: " + getDirectory().getPath() + "/" + fname + ".png");
         }
         catch (IOException e) {
             Log.d(TAG, "Error write file: " + e.getMessage());
@@ -137,12 +139,10 @@ public class PictureFragment extends Fragment {
     }
 
     private File getDirectory() {
-        boolean hasdir = false;
         File dir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
                 "myphoto");
-        if (!dir.exists()) {
-            hasdir = dir.mkdir();
-        }
+        if (!dir.exists())
+            dir.mkdir();
         return dir;
     }
 }

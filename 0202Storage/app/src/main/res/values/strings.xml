@@ -22,11 +22,19 @@
     <string name="button_load_image">Load</string>
 
     <string name="person_name">Name</string>
+    <string name="friend_name">Friend`s name</string>
     <string name="person_phone">Phone</string>
     <string name="person_email">E-mail</string>
-    <string name="person_hobby">Hobby</string>
+    <string name="person_birthday">Birthday</string>
+    <string name="friend_list">Friends list</string>
     <string name="file_name">File</string>
 
     <string name="menuitem_delete">DELETE</string>
     <string name="menuitem_save">SAVE</string>
+    <string name="menuitem_addfriend">Add friend</string>
+    <string name="menuitem_delfriend">Delete friend</string>
+
+    <!-- dialog buttons-->
+    <string name="btn_ok">Ok</string>
+    <string name="btn_cancel">Cancel</string>
 </resources>

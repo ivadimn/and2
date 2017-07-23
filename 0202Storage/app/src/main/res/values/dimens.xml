@@ -10,8 +10,8 @@
     <dimen name="item_height">72dp</dimen>
     <dimen name="image_width">56dp</dimen>
     <dimen name="image_height">56dp</dimen>
-    <dimen name="big_image_width">160dp</dimen>
-    <dimen name="big_image_height">160dp</dimen>
+    <dimen name="big_image_width">128dp</dimen>
+    <dimen name="big_image_height">128dp</dimen>
 
     <!--размеры отступов и полей-->
     <dimen name="view_margin">8dp</dimen>

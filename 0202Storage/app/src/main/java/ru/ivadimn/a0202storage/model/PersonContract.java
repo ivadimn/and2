@@ -19,11 +19,13 @@ public final class PersonContract {
         public static final String COLUMN_PHONE = "phone";
         public static final String COLUMN_EMAIL = "email";
         public static final String COLUMN_PHOTO = "photo";
-        public static final String COLUMN_HOBBY = "hobby";
+        //поле день рождения добавляется во второй версии
+        public static final String COLUMN_BIRTHDAY = "birthday";
+
 
 
         public static final String[] PROJECTION_ALL = {_ID, COLUMN_NAME,
-                COLUMN_PHONE, COLUMN_EMAIL, COLUMN_PHOTO, COLUMN_HOBBY};
+                COLUMN_PHONE, COLUMN_EMAIL, COLUMN_PHOTO, COLUMN_BIRTHDAY};
     }
 
     //for version 1
@@ -38,13 +40,12 @@ public final class PersonContract {
     //for version 2
     public static final String SQL_ALTER_TABLE_2 =
             Db.ALTER_TABLE + PersonEntry.PERSON_TABLE + Db.ADD_COLUMN +
-                    PersonEntry.COLUMN_HOBBY + Db.TYPE_TEXT + ";";
+                    PersonEntry.COLUMN_BIRTHDAY + Db.TYPE_NUMERIC + ";";
+
+
 
     public static final String SQL_UPDATE_TABLE_2 =
-            "UPDATE " + PersonEntry.PERSON_TABLE + " SET " + PersonEntry.COLUMN_HOBBY + " = 'no hobby';";
-
-
-    public static final String SQL_DROP_TABLE =
-            Db.DROP_TABLE + PersonEntry.PERSON_TABLE + ";";
+            "UPDATE " + PersonEntry.PERSON_TABLE + " SET " + PersonEntry.COLUMN_BIRTHDAY
+                    + " = 0;";
 
 }

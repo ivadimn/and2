@@ -9,6 +9,7 @@ public class Db {
     public static final String SEP = ", ";
     public static final String TYPE_TEXT = " TEXT ";
     public static final String TYPE_BLOB = " BLOB ";
+    public static final String TYPE_INT = " INTEGER ";
     public static final String TYPE_NUMERIC = " NUMERIC ";
     public static final String PRIMARY_KEY = " INTEGER PRIMARY KEY AUTOINCREMENT";
 

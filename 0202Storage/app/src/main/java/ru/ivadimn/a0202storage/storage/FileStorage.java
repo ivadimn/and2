@@ -21,7 +21,7 @@ import ru.ivadimn.a0202storage.model.Person;
 
 public class FileStorage implements IDataStore {
 
-    public static final String FILE = "persons1";
+    public static final String FILE = "persons2";
     public static final String TAG = "FILE_STORAGE";
 
     private List<Person> list;

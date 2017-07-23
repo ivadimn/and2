@@ -24,6 +24,7 @@ import ru.ivadimn.a0202storage.App;
 import ru.ivadimn.a0202storage.activities.MainActivity;
 import ru.ivadimn.a0202storage.activities.PersonActivity;
 import ru.ivadimn.a0202storage.interfaces.IDataStore;
+import ru.ivadimn.a0202storage.interfaces.ItemClickListener;
 import ru.ivadimn.a0202storage.model.Person;
 import ru.ivadimn.a0202storage.R;
 import ru.ivadimn.a0202storage.adapters.PersonAdapter;
@@ -121,7 +122,7 @@ public class PersonListFragment extends Fragment implements MainActivity.OnBackP
             adapter.notifyDataSetChanged();
     }
 
-    private PersonAdapter.PersonClickListener personClick = new PersonAdapter.PersonClickListener() {
+    private ItemClickListener personClick = new ItemClickListener() {
         @Override
         public void onClick(View view, int position) {
             Intent intent = PersonActivity.createIntent(getContext(), position, persons.get(position).get_id());

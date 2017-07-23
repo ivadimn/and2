@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import ru.ivadimn.a0202storage.model.FriendContract;
 import ru.ivadimn.a0202storage.model.PersonContract;
 
 /**
@@ -13,7 +14,7 @@ import ru.ivadimn.a0202storage.model.PersonContract;
 public class PersonDBHelper extends SQLiteOpenHelper {
 
     public static final String DB_NAME = "contacts.db";
-    public static final int DB_VERSION = 2;
+    public static final int DB_VERSION = 3;
 
     public PersonDBHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
@@ -36,6 +37,9 @@ public class PersonDBHelper extends SQLiteOpenHelper {
         if (oldVer < 2) {
             db.execSQL(PersonContract.SQL_ALTER_TABLE_2);
             db.execSQL(PersonContract.SQL_UPDATE_TABLE_2);
+        }
+        if (oldVer < 3) {
+            db.execSQL(FriendContract.SQL_CREATE_TABLE);
         }
     }
 }
