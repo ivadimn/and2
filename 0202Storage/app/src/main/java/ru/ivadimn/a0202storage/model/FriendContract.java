@@ -16,14 +16,15 @@ public class FriendContract {
         public static final String COLUMN_NAME = "name";
 
         public static final String[] PROJECTION_ALL = {_ID, COLUMN_PERSON_ID,
-                COLUMN_NAME};
+                COLUMN_NAME };
     }
 
     //for version 3
     public static final String SQL_CREATE_TABLE =
             Db.CREATE_TABLE + FriendEntry.FRIEND_TABLE + "( " +
                     FriendEntry._ID + Db.PRIMARY_KEY + Db.SEP +
-                    FriendEntry.COLUMN_PERSON_ID + Db.TYPE_INT + Db.SEP + ");";
+                    FriendEntry.COLUMN_PERSON_ID + Db.TYPE_INT + Db.SEP +
+                    FriendEntry.COLUMN_NAME + Db.TYPE_TEXT + ");";
 
 
 }

@@ -56,14 +56,18 @@ public class DatabaseStorage implements IDataStore {
         ContentValues values = getContentValues(person);
         try {
             db = dbHelper.getWritableDatabase();
+            db.beginTransaction();
             long rowId = db.insert(PersonContract.PersonEntry.PERSON_TABLE, null, values);
             person.set_id(rowId);
             list.add(person);
+            insertFriends(db, person.getFriends());
+            db.setTransactionSuccessful();
         }
         catch (SQLiteException ex) {
             Toast.makeText(context, "Insert error: " + ex.getMessage(), Toast.LENGTH_SHORT).show();
         }
         finally {
+            db.endTransaction();
             db.close();
         }
     }
@@ -74,15 +78,21 @@ public class DatabaseStorage implements IDataStore {
         ContentValues values = getContentValues(person);
         try {
             db = dbHelper.getWritableDatabase();
+            db.beginTransaction();
+            deleteFriends(db, person.get_id());
             int count  = db.update(PersonContract.PersonEntry.PERSON_TABLE,
                     values, PersonContract.PersonEntry._ID + " = ?", new String[] {Long.toString(person.get_id())});
+            insertFriends(db, person.getFriends());
             list.set(position, person);
+            db.setTransactionSuccessful();
+
         }
         catch(SQLiteException e) {
-            Toast.makeText(context, "Database unavailable - " + e.getMessage(),
+            Toast.makeText(context, "Update error - " + e.getMessage(),
                     Toast.LENGTH_SHORT).show();
         }
         finally {
+            db.endTransaction();
             db.close();
         }
     }
@@ -92,15 +102,20 @@ public class DatabaseStorage implements IDataStore {
         SQLiteDatabase db = null;
         try {
             db = dbHelper.getWritableDatabase();
+            db.beginTransaction();
+            deleteFriends(db, p.get_id());
             db.delete(PersonContract.PersonEntry.PERSON_TABLE,  PersonContract.PersonEntry._ID + " = ?",
                     new String[] {Long.toString(p.get_id())});
             list.remove(p);
+            db.setTransactionSuccessful();
+
         }
         catch(SQLiteException e) {
-            Toast.makeText(context, "Database unavailable - " + e.getMessage(),
+            Toast.makeText(context, "Delete error - " + e.getMessage(),
                     Toast.LENGTH_SHORT).show();
         }
         finally {
+            db.endTransaction();
             db.close();
         }
     }
@@ -114,11 +129,11 @@ public class DatabaseStorage implements IDataStore {
                     PersonContract.PersonEntry.PROJECTION_ALL, null, null, null, null,
                     PersonContract.PersonEntry._ID);
             while(c.moveToNext()) {
-                p.add(getPerson(c));
+                p.add(getPerson(db, c));
             }
         }
         catch (SQLiteException ex) {
-            Toast.makeText(context, "Insert error: " + ex.getMessage(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Query error: " + ex.getMessage(), Toast.LENGTH_SHORT).show();
         }
         finally {
             db.close();
@@ -138,7 +153,7 @@ public class DatabaseStorage implements IDataStore {
         return values;
     }
 
-    private Person getPerson(Cursor c) {
+    private Person getPerson(SQLiteDatabase db, Cursor c) {
         Person person = new Person();
         person.set_id(c.getLong(c.getColumnIndex(PersonContract.PersonEntry._ID)));
         person.setName(c.getString(c.getColumnIndex(PersonContract.PersonEntry.COLUMN_NAME)));
@@ -148,48 +163,33 @@ public class DatabaseStorage implements IDataStore {
         byte[] b = c.getBlob(c.getColumnIndex(PersonContract.PersonEntry.COLUMN_PHOTO));
         person.setPhoto(b);
         ///////////////////
-        person.setFriends(getFriends(person.get_id()));
+        person.setFriends(getFriends(db, person.get_id()));
         return person;
     }
 
     ////////////////////////Friend operation///////////////////////////////////////
 
-    private void insertFriends(List<Friend> fs) {
-        SQLiteDatabase db = null;
-        ContentValues values = getContentValues();
-        db.
-        try {
-            db = dbHelper.getWritableDatabase();
-            long rowId = db.insert(PersonContract.PersonEntry.PERSON_TABLE, null, values);
-            person.set_id(rowId);
-            list.add(person);
-        }
-        catch (SQLiteException ex) {
-            Toast.makeText(context, "Insert error: " + ex.getMessage(), Toast.LENGTH_SHORT).show();
-        }
-        finally {
-            db.close();
+    private void insertFriends(SQLiteDatabase db, List<Friend> fs) throws SQLiteException {
+        List<ContentValues> cvl = getFriendContentValues(fs);
+        for (int i = 0; i < cvl.size(); i++) {
+            ContentValues cv = cvl.get(i);
+            long rowId = db.insert(FriendContract.FriendEntry.FRIEND_TABLE, null, cv);
+            fs.get(i).set_id(rowId);
         }
     }
 
-    private List<Friend> getFriends(long personId) {
+    private void deleteFriends(SQLiteDatabase db,  long personId) throws SQLiteException {
+        db.delete(FriendContract.FriendEntry.FRIEND_TABLE,  FriendContract.FriendEntry.COLUMN_PERSON_ID + " = ?",
+                new String[] {Long.toString(personId)});
+    }
+
+    private List<Friend> getFriends(SQLiteDatabase db, long personId) throws SQLiteException {
         List<Friend> fs = new ArrayList<Friend>();
-        SQLiteDatabase db = null;
-        try {
-            db = dbHelper.getReadableDatabase();
-            Cursor c = db.query(FriendContract.FriendEntry.FRIEND_TABLE,
-                    FriendContract.FriendEntry.PROJECTION_ALL, FriendContract.FriendEntry.COLUMN_PERSON_ID + " = ?",
-                    new String[] {Long.toString(personId)}, null, null, FriendContract.FriendEntry._ID);
-            while(c.moveToNext()) {
-                fs.add(getFriend(c));
-            }
-        }
-        catch (SQLiteException ex) {
-            Toast.makeText(context, "Insert error: " + ex.getMessage(), Toast.LENGTH_SHORT).show();
-        }
-        finally {
-            db.close();
-        }
+        Cursor c = db.query(FriendContract.FriendEntry.FRIEND_TABLE,
+               FriendContract.FriendEntry.PROJECTION_ALL, FriendContract.FriendEntry.COLUMN_PERSON_ID + " = ?",
+               new String[] {Long.toString(personId)}, null, null, FriendContract.FriendEntry._ID);
+        while(c.moveToNext())
+             fs.add(getFriend(c));
         return fs;
     }
 
@@ -205,7 +205,9 @@ public class DatabaseStorage implements IDataStore {
         List<ContentValues> cvl = new ArrayList<ContentValues>();
         for (int i = 0; i < fs.size(); i++) {
             ContentValues cv = new ContentValues();
-            cv.put(FriendContract.FriendEntry.COLUMN_PERSON_ID, fs.get().getPersonId());
+            cv.put(FriendContract.FriendEntry.COLUMN_PERSON_ID, fs.get(i).getPersonId());
+            cv.put(FriendContract.FriendEntry.COLUMN_NAME, fs.get(i).getName());
+            cvl.add(cv);
         }
         return cvl;
     }

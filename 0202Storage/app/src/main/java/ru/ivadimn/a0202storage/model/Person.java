@@ -60,6 +60,9 @@ public class Person implements Serializable {
 
     public void set_id(long _id) {
         this._id = _id;
+        for (Friend f : friends) {
+            f.setPersonId(_id);
+        }
     }
 
     public String getName() {
@@ -108,10 +111,6 @@ public class Person implements Serializable {
 
     public void setBirhtday(long birhtday) {
         this.birhtday = birhtday;
-    }
-
-    public void addFriend(Friend friend) {
-        friends.add(friend);
     }
 
     public void deleteFriend(Friend friend) {
