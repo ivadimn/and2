@@ -111,6 +111,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.menuitem_external_storage_id:
                 showFragment(PictureFragment.createFragment());
                 break;
+            case R.id.menuitem_json_storage_id:
+                showFragment(PersonListFragment.createFragment(StorageFactory.JSON_STORAGE));
+                break;
         }
         drawerLayout.closeDrawers();
         return true;

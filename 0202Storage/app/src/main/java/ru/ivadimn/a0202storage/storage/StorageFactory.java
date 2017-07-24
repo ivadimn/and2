@@ -12,6 +12,7 @@ public class StorageFactory {
 
     public static final int FILE_STORAGE = 1;
     public static final int DATABASE_STORAGE = 2;
+    public static final int JSON_STORAGE = 3;
 
     private static IDataStore store = null;
 
@@ -23,6 +24,9 @@ public class StorageFactory {
                 break;
             case DATABASE_STORAGE:
                 store = new DatabaseStorage(context);
+                break;
+            case JSON_STORAGE:
+                store = new JsonStorage(context);
                 break;
             default:
                 store = null;

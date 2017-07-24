@@ -18,6 +18,10 @@
             android:title="@string/composit_storage"
             android:icon="@drawable/ic_external_storage"
             app:showAsAction="always"/>
+        <item android:id="@+id/menuitem_json_storage_id"
+            android:title="@string/json_storage"
+            android:icon="@drawable/ic_json_storage"
+            app:showAsAction="always"/>
     </group>
 
 
