@@ -6,6 +6,8 @@ import android.os.Looper;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -15,6 +17,7 @@ import android.widget.Toast;
 import java.util.List;
 
 import ru.ivadimn.a0205threads.R;
+import ru.ivadimn.a0205threads.adapters.PersonAdapter;
 import ru.ivadimn.a0205threads.commands.BaseCommand;
 import ru.ivadimn.a0205threads.commands.ReadDbCommand;
 import ru.ivadimn.a0205threads.model.Person;
@@ -29,6 +32,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView txtData;
     private BackgroundCommandThread commandThread;
     private IDataStore storage;
+    private RecyclerView recyclerView;
+    private List<Person> persons;
+    private PersonAdapter adapter;
 
     private ProgressBar progressBar;
     private ReadDbCommand readCommand;
@@ -38,11 +44,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         storage = StorageFactory.getStorage();
-        txtData = (TextView) findViewById(R.id.data_id);
         findViewById(R.id.btn_start_id).setOnClickListener(this);
         findViewById(R.id.btn_asynctask_id).setOnClickListener(this);
         findViewById(R.id.btn_loader_id).setOnClickListener(this);
         findViewById(R.id.btn_handlerthread_id).setOnClickListener(this);
+        recyclerView = (RecyclerView) findViewById(R.id.person_list_id);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        adapter = new PersonAdapter(this);
+        recyclerView.setAdapter(adapter);
 
         progressBar = (ProgressBar) findViewById(R.id.loading_data_id);
         commandThread = new BackgroundCommandThread("MAIN_ACTIVITY");
@@ -89,7 +98,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     progressBar.setVisibility(View.INVISIBLE);
                 }
             });
-
         }
     };
 
@@ -101,11 +109,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     };
 
     private void updateView(List<Person> p) {
-        StringBuilder sb = new StringBuilder();
-        sb.append(String.format("Количество записей: %d\n", p.size()));
-        for (int i = 0; i < p.size(); i++) {
-            sb.append(p.get(i).getName() + "\n");
-        }
-        txtData.setText(sb.toString());
+        persons = p;
+        adapter.updateData(persons);
     }
 }
