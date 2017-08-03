@@ -21,6 +21,7 @@
             android:name=".activities.LoaderActivity"
             android:label="@string/loader_name" />
         <activity android:name=".activities.HandleThreadActivity"></activity>
+
     </application>
 
 </manifest>

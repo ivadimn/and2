@@ -11,8 +11,6 @@ import ru.ivadimn.a0205threads.storage.IDataStore;
  */
 
 public class ReadDbCommand extends DataCommand<List<Person>> {
-
-
     public ReadDbCommand(IDataStore store, CommandDone done) {
         super(store, done);
     }
