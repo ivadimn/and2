@@ -20,20 +20,14 @@ import ru.ivadimn.a0206reciver.handlers.SmsReciveHandler;
 public class SmsReciver extends BroadcastReceiver {
 
     private static final String ACTION = "android.provider.Telephony.SMS_RECEIVED";
-    private SmsReciveHandler smsHandler;
-
-    public SmsReciver() {
-        super();
-        smsHandler = new SmsReciveHandler(ACTION);
-    }
 
     @Override
     public void onReceive(Context context, Intent intent) {
         Bundle bundle = intent.getExtras();
-        SmsMessage[] msgs = null;
-        StringBuilder sb = new StringBuilder();
         if (bundle != null) {
-            smsHandler.smsHandle(bundle);
+            new SmsReciveHandler(context, bundle).start();
         }
     }
+
+
 }

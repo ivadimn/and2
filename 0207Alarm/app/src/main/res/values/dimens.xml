@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="image_size">72dp</dimen>
+    <dimen name="padding_size">4dp</dimen>
+
+    <dimen name="textfield_height">256dp</dimen>
+    <!-- размер фотографии-->
+    <dimen name="item_height">56dp</dimen>
+    <dimen name="image_width">56dp</dimen>
+    <dimen name="edit_height">128dp</dimen>
+    <dimen name="big_image_width">128dp</dimen>
+    <dimen name="big_image_height">128dp</dimen>
+
+    <!--размеры отступов и полей-->
+    <dimen name="view_margin">8dp</dimen>
+    <dimen name="view_padding">4dp</dimen>
+    <dimen name="corner_radius">8dp</dimen>
+    <dimen name="elevation_size">8dp</dimen>
+    <dimen name="text_view_elevation">8dp</dimen>
+</resources>

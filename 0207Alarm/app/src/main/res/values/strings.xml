@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">0207Alarm</string>
+
+    <string name="event_name">Name event</string>
+    <string name="event_moment">When</string>
+
+    <string name="menu_item_save">SAVE</string>
+</resources>

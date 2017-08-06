@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">0206Reciver</string>
+    <string name="item_file_load">Load file</string>
 </resources>

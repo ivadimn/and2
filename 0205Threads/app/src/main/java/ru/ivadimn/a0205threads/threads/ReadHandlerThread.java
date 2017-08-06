@@ -56,9 +56,14 @@ public class ReadHandlerThread extends HandlerThread {
         };
     }
 
-    public void read() {
+    public void read()  {
         Message msg = mHandler.obtainMessage(READ);
         mHandler.sendMessage(msg);
+        try {
+            mHandler.wait();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     public void insert(Person person) {

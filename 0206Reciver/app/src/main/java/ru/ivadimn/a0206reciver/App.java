@@ -1,10 +1,14 @@
 package ru.ivadimn.a0206reciver;
 
 import android.app.Application;
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import ru.ivadimn.a0206reciver.handlers.FileLoaderService;
 import ru.ivadimn.a0206reciver.model.TextMessage;
 
 /**
@@ -24,6 +28,8 @@ public class App extends Application {
         super.onCreate();
         instance = this;
         messages = new ArrayList<>();
+        if (!isConnectedWifi())
+            FileLoaderService.suspendLoad();
     }
 
     public void addMessage(TextMessage msg) {
@@ -32,5 +38,11 @@ public class App extends Application {
 
     public List<TextMessage> getMessages() {
         return messages;
+    }
+
+    public boolean isConnectedWifi() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo mWifi = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+        return mWifi.isConnectedOrConnecting();
     }
 }
