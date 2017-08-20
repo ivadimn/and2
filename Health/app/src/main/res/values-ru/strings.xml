@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Дом и здоровье</string>
+    <!-- menu items-->
+
+    <string name="blood_pressure">Артериальное давление</string>
+    <string name="accounting_devices">Приборы учёта</string>
+</resources>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/item_health_id"
+        android:title="@string/health">
+        <group android:id="@+id/health_menu_group_id"
+            android:checkableBehavior="single">
+            <item android:id="@+id/item_blood_pressure_id"
+                android:title="@string/blood_pressure"
+                android:icon="@drawable/ic_blood_pressure"
+                />
+        </group>
+    </item>
+    <item android:id="@+id/item_home_id"
+        android:title="@string/home">
+        <group android:id="@+id/ho_menu_group_id"
+            android:checkableBehavior="single">
+            <item android:id="@+id/item_accounting_devices_id"
+                android:title="@string/accounting_devices"
+                android:icon="@drawable/ic_accounting_devices"
+                />
+        </group>
+    </item>
+</menu>
