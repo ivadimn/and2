@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+    <item android:id="@+id/mi_save_press_id"
+        android:title="@string/save"
+        app:showAsAction="always"
+        />
+    <item android:id="@+id/mi_add_result_id"
+        android:title="@string/add_press"
+        android:icon="@android:drawable/ic_input_add"
+        app:showAsAction="ifRoom"
+        />
+    <item android:id="@+id/mi_delete_result_id"
+        android:title="@string/delete_press"
+        android:icon="@android:drawable/ic_input_add"
+        app:showAsAction="ifRoom"
+        />
+
+</menu>

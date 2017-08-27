@@ -10,5 +10,5 @@ public interface DbShema {
     public String[] getColumns();
     public int getColumnsCount();
     public String getKeyColumn();
-    public String getWhere();
+
 }

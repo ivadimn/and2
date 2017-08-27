@@ -35,4 +35,8 @@ public class Values {
         if (index >= count) return null;
         return values[index];
     }
+
+    public int size() {
+        return values.length;
+    }
 }

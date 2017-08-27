@@ -6,8 +6,14 @@
     <!-- menu items-->
     <string name="blood_pressure">Blood pressure</string>
     <string name="accounting_devices">Accounting devices</string>
+    <string name="comment">Commnent</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <!-- menu strings -->
+    <string name="save">SAVE</string>
+    <string name="add_press">Add result</string>
+    <string name="delete_press">Delete</string>
 
 </resources>

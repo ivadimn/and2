@@ -6,4 +6,5 @@
     <dimen name="view_margin">8dp</dimen>
     <dimen name="view_padding">4dp</dimen>
     <dimen name="image_size">72dp</dimen>
+    <dimen name="item_height">72dp</dimen>
 </resources>

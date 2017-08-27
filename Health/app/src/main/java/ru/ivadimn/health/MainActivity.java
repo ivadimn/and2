@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -12,6 +13,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+
+import ru.ivadimn.health.fragments.PagerFragment;
+import ru.ivadimn.health.fragments.PressListFragment;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
@@ -74,11 +78,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch(item.getItemId()) {
             case R.id.item_blood_pressure_id:
-                return true;
+                showFragment(PressListFragment.getInstance("Blood Pressure"), PressListFragment.TAG);
+                break;
             case R.id.item_accounting_devices_id:
-                return true;
-            default:
-                return false;
+                break;
+
         }
+        layout.closeDrawer(GravityCompat.START);
+        return true;
+    }
+
+    private void showFragment(PagerFragment fragment, String tag) {
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.fragment_container_id, fragment);
+        ft.addToBackStack(tag);
+        ft.commit();
     }
 }

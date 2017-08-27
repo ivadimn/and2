@@ -5,4 +5,10 @@
 
     <string name="blood_pressure">Артериальное давление</string>
     <string name="accounting_devices">Приборы учёта</string>
+    <string name="comment">Комментарий</string>
+
+    <!-- menu strings -->
+    <string name="save">СОХРАНИТЬ</string>
+    <string name="add_press">Добавить результат</string>
+    <string name="delete_press">Удалить</string>
 </resources>

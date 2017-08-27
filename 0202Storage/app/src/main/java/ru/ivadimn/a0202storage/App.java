@@ -23,8 +23,6 @@ import ru.ivadimn.a0202storage.storage.FileStorage;
 
 public class App extends Application {
 
-
-
     private static App instance;
     @Override
     public void onCreate() {

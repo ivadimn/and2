@@ -7,6 +7,4 @@ package ru.ivadimn.health.database;
 public interface Row {
     public Values getValues();
     public void setValues(Values values);
-    public String[] getValuesString();
-
 }
