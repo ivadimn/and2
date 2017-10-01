@@ -1,6 +1,7 @@
 package ru.ivadimn.health.database;
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
@@ -21,8 +22,8 @@ import ru.ivadimn.health.Utils;
 public class DataManage {
     SQLiteOpenHelper dbHelper;
 
-    public DataManage() {
-        dbHelper = new HealthDbHelper(App.getInstance().getApplicationContext());
+    public DataManage(Context context) {
+        dbHelper = new HealthDbHelper(context);
     }
 
     public List<Values> selectAll(DbShema shema, String where, String[] args) {

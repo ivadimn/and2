@@ -1,5 +1,6 @@
 package ru.ivadimn.health.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -14,7 +15,9 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.List;
 
+import ru.ivadimn.health.App;
 import ru.ivadimn.health.R;
+import ru.ivadimn.health.activities.PressActivity;
 import ru.ivadimn.health.adapters.PressAdapter;
 import ru.ivadimn.health.database.DataManage;
 import ru.ivadimn.health.database.DbEntity;
@@ -28,10 +31,11 @@ import ru.ivadimn.health.model.Press;
 public class PressListFragment extends PagerFragment {
 
     public static final String TAG = "PressListFragment";
+    private static final int ADD_PRESS = 1;
 
     private static PressListFragment instance;
 
-    private DataManage data = new DataManage();
+    private DataManage data;
     private List<Press> listPress;
     private RecyclerView recycler;
     private PressAdapter adapter;
@@ -46,6 +50,7 @@ public class PressListFragment extends PagerFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        data = App.getInstance().getDataManage();
         List<Values> vals = data.selectAll(Press.shema, null, null);
         listPress = new ArrayList<>();
         for (int i = 0; i < vals.size(); i++) {
@@ -73,14 +78,14 @@ public class PressListFragment extends PagerFragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showDateDialog();
+                addPress();
             }
         });
     }
 
-    private void showDateDialog() {
-        DateDlgFragment dlg = DateDlgFragment.createDialog(System.currentTimeMillis());
-        dlg.show(getFragmentManager(), "DATE_PICKER");
+    private void addPress() {
+        Intent intent = PressActivity.createIntent(getActivity(), null);
+        startActivityForResult(intent, ADD_PRESS);
     }
 }
 

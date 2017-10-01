@@ -11,4 +11,8 @@
     <string name="save">СОХРАНИТЬ</string>
     <string name="add_press">Добавить результат</string>
     <string name="delete_press">Удалить</string>
+
+    <!-- Dialog buttons-->
+    <string name="ok">ОК</string>
+    <string name="cancel">ОТМЕНИТЬ</string>
 </resources>

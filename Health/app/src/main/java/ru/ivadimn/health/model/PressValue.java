@@ -85,4 +85,28 @@ public class PressValue extends DbEntity {
             return _ID;
         }
     };
+
+    public byte getSystol() {
+        return systol;
+    }
+
+    public void setSystol(byte systol) {
+        this.systol = systol;
+    }
+
+    public byte getDiastol() {
+        return diastol;
+    }
+
+    public void setDiastol(byte diastol) {
+        this.diastol = diastol;
+    }
+
+    public byte getPuls() {
+        return puls;
+    }
+
+    public void setPuls(byte puls) {
+        this.puls = puls;
+    }
 }

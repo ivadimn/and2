@@ -19,14 +19,26 @@ import ru.ivadimn.health.Utils;
 
 public class DateDlgFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener  {
 
+    public static final String TAG = "DateDlgFragment";
     private static final String DATE = "DATE";
 
-    public static DateDlgFragment createDialog(long date) {
+    private OnDateSetListener listener;
+
+    public interface OnDateSetListener {
+        public void onDateSelect(long date);
+    }
+
+    public static DateDlgFragment createDialog(long date, OnDateSetListener listener) {
         DateDlgFragment dlg = new DateDlgFragment();
         Bundle bundle = new Bundle();
         bundle.putLong(DATE, date);
         dlg.setArguments(bundle);
+        dlg.setDateSelectListener(listener);
         return dlg;
+    }
+
+    public void setDateSelectListener(OnDateSetListener listener) {
+        this.listener = listener;
     }
 
     @NonNull
@@ -43,6 +55,7 @@ public class DateDlgFragment extends DialogFragment implements DatePickerDialog.
     public void onDateSet(DatePicker datePicker, int year, int month, int day) {
         Calendar c = Calendar.getInstance();
         c.set(year, month, day);
-        Toast.makeText(getContext(), Utils.stringDate(c.getTimeInMillis()), Toast.LENGTH_SHORT).show();
+        if (listener != null)
+            listener.onDateSelect(c.getTimeInMillis());
     }
 }

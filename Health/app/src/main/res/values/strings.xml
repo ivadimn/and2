@@ -16,4 +16,12 @@
     <string name="add_press">Add result</string>
     <string name="delete_press">Delete</string>
 
+    <string name="systolic">Systolic pressure</string>
+    <string name="diastolic">Diastolic pressure</string>
+    <string name="puls">Puls</string>
+
+    <!-- Dialog buttons-->
+    <string name="ok">OK</string>
+    <string name="cancel">CANCEL</string>
+
 </resources>
