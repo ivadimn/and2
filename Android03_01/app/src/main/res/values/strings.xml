@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Android03_01</string>
+    <string name="counter_1">Счётчик 1</string>
+    <string name="counter_2">Счётчик 2</string>
+    <string name="counter_3">Счётчик 3</string>
+    <string name="count">Количество=0</string>
+
 </resources>
