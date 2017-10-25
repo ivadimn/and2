@@ -1,6 +1,7 @@
 package ru.ivadimn.android03_01.presenter;
 
 import ru.ivadimn.android03_01.MainActivity;
+import ru.ivadimn.android03_01.interfaces.ViewInterface;
 import ru.ivadimn.android03_01.model.Model;
 
 /**
@@ -9,8 +10,8 @@ import ru.ivadimn.android03_01.model.Model;
 
 public class Presenter {
     private Model mModel;
-    private MainActivity view;
-    public Presenter(MainActivity view) {
+    private ViewInterface view;
+    public Presenter(ViewInterface view) {
         this.mModel = new Model();
         this.view = view;
     }
@@ -19,4 +20,11 @@ public class Presenter {
         return mModel.getElementValueAtIndex(modelElementIndex) + 1;
     }
 
+    public void buttonClick(int index) {
+        int newModelValue;
+        newModelValue = calcNewModelValue(index);
+        mModel.setElementValueAtIndex(index, newModelValue);
+        view.setButtonTExt(index, newModelValue);
+
+    }
 }
