@@ -1,5 +1,13 @@
 package ru.ivadimn.android03_01.presenter;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Set;
+
 import ru.ivadimn.android03_01.MainActivity;
 import ru.ivadimn.android03_01.interfaces.ViewInterface;
 import ru.ivadimn.android03_01.model.Model;
@@ -9,6 +17,8 @@ import ru.ivadimn.android03_01.model.Model;
  */
 
 public class Presenter {
+    private static final String MODEL_STATE = "MODEL_STATE";
+    private static final String COUNTERS = "COUNTERS";
     private Model mModel;
     private ViewInterface view;
     public Presenter(ViewInterface view) {
@@ -27,4 +37,17 @@ public class Presenter {
         view.setButtonTExt(index, newModelValue);
 
     }
+
+
+    public void saveState(Bundle outState) {
+        outState.putIntegerArrayList(COUNTERS, mModel.getmList());
+    }
+
+    public void restoreState(Bundle inState) {
+        mModel.setmList(inState.getIntegerArrayList(COUNTERS));
+        for (int i = 0; i < 3; i++) {
+            view.setButtonTExt(i, mModel.getElementValueAtIndex(i));
+        }
+    }
+
 }

@@ -1,7 +1,9 @@
 package ru.ivadimn.android03_01;
 
+import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -11,6 +13,8 @@ import ru.ivadimn.android03_01.interfaces.ViewInterface;
 import ru.ivadimn.android03_01.presenter.Presenter;
 
 public class MainActivity extends AppCompatActivity implements ViewInterface, View.OnClickListener {
+
+    private static final String TAG = ".........MAIN_ACTIVITY";
 
     private Presenter mPresenter;
     private int[] btnIds = {R.id.btn_counter1, R.id.btn_counter2, R.id.btn_counter3};
@@ -27,12 +31,15 @@ public class MainActivity extends AppCompatActivity implements ViewInterface, Vi
         }
 
         mPresenter = new Presenter(this);
+        if (savedInstanceState != null)
+            mPresenter.restoreState(savedInstanceState);
     }
 
     @Override
     public void onClick(View v) {
         int btnIndex = Arrays.binarySearch(btnIds, v.getId());
         mPresenter.buttonClick(btnIndex);
+
     }
 
 
@@ -40,4 +47,12 @@ public class MainActivity extends AppCompatActivity implements ViewInterface, Vi
     public void setButtonTExt(int btnIndex, int value) {
         btns[btnIndex].setText("Количество=" + value);
     }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        mPresenter.saveState(outState);
+    }
+
+
 }

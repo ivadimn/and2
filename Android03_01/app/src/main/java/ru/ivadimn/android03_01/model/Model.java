@@ -1,8 +1,13 @@
 package ru.ivadimn.android03_01.model;
 
+import android.util.ArraySet;
+
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Observable;
+import java.util.Set;
 
 /**
  * Created by vadim on 24.10.17.
@@ -10,7 +15,7 @@ import java.util.Observable;
 
 public class Model  {
 
-    private List<Integer> mList;
+    private ArrayList<Integer> mList;
     public Model() {
         mList = new ArrayList<>(3);
         mList.add(0);
@@ -25,4 +30,11 @@ public class Model  {
         mList.set(index, value);
     }
 
+    public ArrayList<Integer> getmList() {
+        return mList;
+    }
+
+    public void setmList(ArrayList<Integer> mList) {
+        this.mList = mList;
+    }
 }
